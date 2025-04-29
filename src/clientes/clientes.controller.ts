@@ -13,9 +13,13 @@ export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 
   @UseGuards(AuthGuard)
-  @Get()
-  async findAll() {
-    return await this.clientesService.findAll()
+  @Get(':usuario_id')
+  async findAll(@Param('usuario_id') usuarioId: string) {
+    console.log(usuarioId)
+    if(!usuarioId){
+      throw new BadRequestException('ID do usuario não enviado')
+    }
+    return await this.clientesService.findAll(+usuarioId)
   }
 
   @UseGuards(AuthGuard)

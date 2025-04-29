@@ -10,8 +10,10 @@ export class ClientesService {
     private clienteRepository: Repository<Cliente>,
   ) {}
 
-  findAll(): Promise<Cliente[]> {
-    return this.clienteRepository.find()
+  async findAll(usuarioId: number): Promise<Cliente[] | null> {
+    const clientes = await this.clienteRepository.find({ where: { usuario: { id: usuarioId } }})
+    console.log(clientes)
+    return clientes
   }
 
   async findbyName(nome: string): Promise<Cliente | null> {
