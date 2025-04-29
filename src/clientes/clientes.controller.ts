@@ -6,6 +6,8 @@ import { ClientesService } from './clientes.service'
 import { AuthGuard } from '../middleware/auth.guard'
 import { Cliente } from './cliente.entity'
 
+import { validarCliente } from '../middleware/validarCliente'
+
 @Controller('clientes')
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
@@ -25,12 +27,14 @@ export class ClientesController {
   @UseGuards(AuthGuard)
   @Post()
   async create(@Body() cliente: Cliente) {
+    validarCliente(cliente)
     return await this.clientesService.create(cliente)
   }
 
   @UseGuards(AuthGuard)
   @Put(':id')
   async update(@Param('id') id: string, @Body() cliente: Cliente) {
+    validarCliente(cliente)
     return await this.clientesService.update(+id, cliente)
   }
 

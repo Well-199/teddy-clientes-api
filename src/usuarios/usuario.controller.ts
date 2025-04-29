@@ -15,7 +15,6 @@ export class UsuarioController {
     }
 
     const user = await this.usuarioService.findByName(nome)
-    console.log(`RETORNO LOGIN: ${user}`)
     if(!user){
       throw new BadRequestException('Cliente não encontrado!')
     }
