@@ -2,7 +2,9 @@ import { DataSource } from 'typeorm'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Cliente } from './clientes/cliente.entity'
+import { Usuario } from './usuarios/usuario.entity'
 import { ClientesModule } from './clientes/clientes.module'
+import { UsuarioModule } from './usuarios/usuario.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Module({
@@ -21,11 +23,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         schema: 'teddy',
-        entities: [Cliente],
+        entities: [Cliente, Usuario],
         synchronize: false,
       }),
     }),
     ClientesModule,
+    UsuarioModule
   ],
 })
 

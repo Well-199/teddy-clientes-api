@@ -10,14 +10,6 @@ export class ClientesService {
     private clienteRepository: Repository<Cliente>,
   ) {}
 
-  async buscaPorToken(token: string): Promise<boolean> {
-    const user = await this.clienteRepository.findOneBy({ token })
-    if (token === user?.token) {
-      return true
-    }
-    return false
-  }
-
   findAll(): Promise<Cliente[]> {
     return this.clienteRepository.find()
   }

@@ -1,20 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm'
+import { Usuario } from '../usuarios/usuario.entity'
 
-@Entity('clientes') // Nome da tabela
+@Entity('clientes')
 export class Cliente {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ type: 'varchar', length: 255 })
-  nome: string;
+  nome: string
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  salario: number;
+  salario: number
 
   @Column({ type: 'decimal', precision: 10, scale: 2, name: 'valor_empresa' })
-  valorEmpresa: number;
+  valorEmpresa: number
 
-  @Column({ type: 'varchar', length: 255 })
-  token: string;
+  @ManyToOne(() => Usuario, usuario => usuario.clientes)
+  @JoinColumn({ name: 'usuario_id' }) 
+  usuario: Usuario
 }
-

@@ -5,7 +5,6 @@ import {
 import { ClientesService } from './clientes.service'
 import { AuthGuard } from '../middleware/auth.guard'
 import { Cliente } from './cliente.entity'
-import * as bcrypt from 'bcrypt'
 
 @Controller('clientes')
 export class ClientesController {
@@ -21,32 +20,6 @@ export class ClientesController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.clientesService.findOne(+id)
-  }
-
-  @Post('login')
-  @HttpCode(200)
-  async login(@Body('nome') nome: string) {
-    
-    if(!nome){
-      throw new BadRequestException('Nome não enviado')
-    }
-
-    const user = await this.clientesService.findbyName(nome)
-    if(!user){
-      throw new BadRequestException('Cliente não encontrado!')
-    }
-
-    // gerar um token
-    const payload = (Date.now() + Math.random()).toString()
-    const token = await bcrypt.hash(payload, 10)
-    
-    // atualiza a propriedade token
-    user.token = token
-
-    // atualiza o token no banco de dados
-    await this.clientesService.update(user.id, user)
-
-    return user
   }
 
   @UseGuards(AuthGuard)
