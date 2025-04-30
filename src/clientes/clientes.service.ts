@@ -15,7 +15,6 @@ export class ClientesService {
       where: { usuario: { id: usuarioId } },
       order: { id: 'DESC' }
     })
-    console.log(clientes)
     return clientes
   }
 

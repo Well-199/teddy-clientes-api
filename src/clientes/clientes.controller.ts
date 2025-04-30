@@ -15,7 +15,6 @@ export class ClientesController {
   @UseGuards(AuthGuard)
   @Get(':usuario_id')
   async findAll(@Param('usuario_id') usuarioId: string) {
-    console.log(usuarioId)
     if(!usuarioId){
       throw new BadRequestException('ID do usuario não enviado')
     }
