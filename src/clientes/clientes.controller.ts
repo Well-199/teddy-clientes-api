@@ -29,7 +29,7 @@ export class ClientesController {
   }
 
   @UseGuards(AuthGuard)
-  @Post()
+  @Post(':id')
   async create(@Body() cliente: Cliente) {
     validarCliente(cliente)
     return await this.clientesService.create(cliente)
@@ -45,6 +45,7 @@ export class ClientesController {
   @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return await this.clientesService.delete(+id)
+    await this.clientesService.delete(+id)
+    return { id: id }
   }
 }
